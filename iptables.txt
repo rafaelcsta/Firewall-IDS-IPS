@@ -1,0 +1,20 @@
+# ver regras criadas: iptables -L INPUT -n --line-numbers | grep 1... & iptables -L -v
+# criar regras: iptables -I INPUT -s 1.2.3.4 -j DROP | pode ser usado subrede /24 /16 
+# -I = chain, -i = interface, -A CRIA REGRA | -L consultar log, -s origem pode ser ip ou hand ... 
+# -d destino, -j acao, -P Muda a politica mas deve ser usado soh iptables -P INPUT DROP
+# iptatables -S (ver regras e acoes)
+# iptables-save > arquivoderegras (salva regras atuais no arquivo)
+# iptables-restore < arquivoderegras (torna regras de um arquivos validas)
+# voce deve usar os scripts pra adicionar regras a cada boot.
+# iptables -D INPUT 1 ... deleta a regra, a 2 passa a ser a primeira... colsulte a cada modificacao
+# iptables -L INPUT -n --line-numbers | mostra todas as regras enumeradas
+# iptables -F | desfaz tudo deixa iptables sem regra nenhuma
+# podem ser usados filtros com | grep "ip" para achar ips ou subredes apos qqer saida do iptables
+# ...semelhante a uma analize de logs
+# iptables  -A INPUT -s 189.1.50.0/24 -j LOG --log-prefix "IP BLOQUEADO:" ...
+# ... para visualizar tentativas de acesso de ips dessa rede use iptables -L -v
+# Longatto | iptables -nL mostra legal | mude a politica pra drop nega tudo iptables -P INPUT DROP
+# Criando excecao: iptables -A INPUT ! -s 171.171.171.171 -p tcp --dport 22 -j DROP
+# Nunca pode ter 2 excecoes com ips diferentes pra uma mesma porta
+# Ao permitir SSH via CHIP lembrar de substituir o IPanterior em todas as regras em que ele consta.
+#sudo iptables-restore < /home/visual/Desktop/configs/iptablesrules
